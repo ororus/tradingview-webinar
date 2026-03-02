@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradingView × OpenClaw — Webinar Blueprint</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: #2a2a3a;
+    --text: #e4e4ed;
+    --text-dim: #8888a0;
+    --accent: #6366f1;
+    --accent2: #818cf8;
+    --green: #22c55e;
+    --red: #ef4444;
+    --amber: #f59e0b;
+    --cyan: #06b6d4;
+    --pink: #ec4899;
+    --purple: #a855f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #0f0f1a 0%, #1a1030 50%, #0f1a2a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(99,102,241,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(6,182,212,0.06) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    position: relative;
+    background: linear-gradient(135deg, #fff 0%, var(--accent2) 50%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .hero .subtitle {
+    font-size: 1.15rem;
+    color: var(--text-dim);
+    font-weight: 400;
+    position: relative;
+  }
+
+  .hero .badge {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 6px 16px;
+    background: rgba(99,102,241,0.15);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent2);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  /* FLOW DIAGRAM */
+  .flow-section {
+    margin-bottom: 48px;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent2);
+    margin-bottom: 16px;
+  }
+
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+
+  .flow-step {
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    text-align: center;
+    min-width: 180px;
+    transition: all 0.2s;
+  }
+
+  .flow-step:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(99,102,241,0.15);
+  }
+
+  .flow-step .icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .flow-step .label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+
+  .flow-step .desc {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  .flow-arrow {
+    flex-shrink: 0;
+    color: var(--accent);
+    font-size: 1.5rem;
+    padding: 0 8px;
+    opacity: 0.6;
+  }
+
+  /* CARDS GRID */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--border);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card h3 .emoji {
+    font-size: 1.3rem;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .card ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card ul li:last-child { border-bottom: none; }
+
+  .card ul li::before {
+    content: '›';
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  /* TOOLS TABLE */
+  .tools-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 48px;
+  }
+
+  .tools-table th {
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tools-table td {
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    vertical-align: top;
+  }
+
+  .tools-table tr:hover td {
+    background: rgba(99,102,241,0.04);
+  }
+
+  .tool-name {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .tool-role {
+    color: var(--text-dim);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .tag-core { background: rgba(99,102,241,0.15); color: var(--accent2); }
+  .tag-data { background: rgba(6,182,212,0.15); color: var(--cyan); }
+  .tag-lib { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .tag-infra { background: rgba(34,197,94,0.15); color: var(--green); }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-card .value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+  }
+
+  .stat-card .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  /* TRADINGVIEW STEPS */
+  .steps {
+    counter-reset: step;
+    margin-bottom: 48px;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--cyan));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #fff;
+    counter-increment: step;
+  }
+
+  .step-content h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .step-content p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* GITHUB TREE */
+  .tree {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  .tree .folder { color: var(--cyan); font-weight: 600; }
+  .tree .file { color: var(--text-dim); }
+  .tree .highlight { color: var(--amber); }
+
+  /* RULES */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .rule {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rule::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .rule.must::before { background: var(--green); }
+  .rule.never::before { background: var(--red); }
+  .rule.tip::before { background: var(--amber); }
+
+  .rule .rule-type {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 8px;
+  }
+
+  .rule.must .rule-type { color: var(--green); }
+  .rule.never .rule-type { color: var(--red); }
+  .rule.tip .rule-type { color: var(--amber); }
+
+  .rule p {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* WEBINAR THEMES */
+  .themes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+
+  .theme {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .theme .theme-icon {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+  }
+
+  .theme h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .theme p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero { padding: 40px 20px; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+    .cards { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Webinar Blueprint</div>
+  <h1>TradingView × OpenClaw</h1>
+  <p class="subtitle">Automated Indicator Extraction, Conversion & Backtesting — The RBI Framework</p>
+</div>
+
+<div class="container">
+
+  <!-- RBI FLOW -->
+  <div class="flow-section">
+    <div class="section-label">The RBI Workflow</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="icon">🔬</div>
+        <div class="label">Research</div>
+        <div class="desc">Extract PineScript indicators from TradingView community</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">🔄</div>
+        <div class="label">Convert</div>
+        <div class="desc">AI converts PineScript → Python using Pandas TA / TA Lib</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">📊</div>
+        <div class="label">Backtest</div>
+        <div class="desc">Run backtesting.py with $1M capital on BTC data</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">📋</div>
+        <div class="label">Log</div>
+        <div class="desc">Stats → code comments + master CSV, push to GitHub</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">🤖</div>
+        <div class="label">Implement</div>
+        <div class="desc">Winners become live trading bots</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KEY METRICS -->
+  <div class="section-label">Backtest Metrics Tracked</div>
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="value" style="color: var(--green);">ROI</div>
+      <div class="stat-label">Return on Investment</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" style="color: var(--red);">MDD</div>
+      <div class="stat-label">Max Drawdown</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" style="color: var(--accent2);">SR</div>
+      <div class="stat-label">Sharpe Ratio</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" style="color: var(--cyan);">SoR</div>
+      <div class="stat-label">Sortino Ratio</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" style="color: var(--amber);">EV</div>
+      <div class="stat-label">Expected Value</div>
+    </div>
+    <div class="stat-card">
+      <div class="value" style="color: var(--purple);">#</div>
+      <div class="stat-label">Number of Trades</div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <div class="section-label">Tools & Stack</div>
+  <table class="tools-table">
+    <thead>
+      <tr>
+        <th>Tool</th>
+        <th>Role</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="tool-name">OpenClaw</td>
+        <td class="tool-role">AI agent platform — full computer access, browser automation, file ops, GitHub pushes</td>
+        <td><span class="tag tag-core">Core</span></td>
+      </tr>
+      <tr>
+        <td class="tool-name">TradingView</td>
+        <td class="tool-role">Source of community PineScript indicators (Editor's Picks, Top, Trending)</td>
+        <td><span class="tag tag-core">Core</span></td>
+      </tr>
+      <tr>
+        <td class="tool-name">backtesting.py</td>
+        <td class="tool-role">Python backtesting framework — runs strategies, generates full stat reports</td>
+        <td><span class="tag tag-lib">Library</span></td>
+      </tr>
+      <tr>
+        <td class="tool-name">Pandas TA / TA Lib</td>
+        <td class="tool-role">Technical indicator libraries for Python — translates PineScript math</td>
+        <td><span class="tag tag-lib">Library</span></td>
+      </tr>
+      <tr>
+        <td class="tool-name">moondev.com/data</td>
+        <td class="tool-role">Historical market data — BTC 1h/6h datasets via API key</td>
+        <td><span class="tag tag-data">Data</span></td>
+      </tr>
+      <tr>
+        <td class="tool-name">GitHub</td>
+        <td class="tool-role">Version control — Moondev AI Agents repo, Agents/OpenClaw/TradingView folder</td>
+        <td><span class="tag tag-infra">Infra</span></td>
+      </tr>
+      <tr>
+        <td class="tool-name">Python</td>
+        <td class="tool-role">Primary language for all converted indicators and backtests</td>
+        <td><span class="tag tag-infra">Infra</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TRADINGVIEW STEPS -->
+  <div class="section-label">TradingView Extraction — Step by Step</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Open TradingView in Browser</h4>
+        <p>OpenClaw opens a Chrome browser and navigates to TradingView. User logs in manually when prompted.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Navigate to Indicators Panel</h4>
+        <p>Click the Indicators tab at the top of the TradingView interface.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Go to Community Section</h4>
+        <p>Scroll to the Community section. Process all three tabs: <strong>Editor's Picks</strong>, <strong>Top</strong>, and <strong>Trending</strong>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Process Each Indicator</h4>
+        <p>For each script: click the Source Code icon (‹/›), select all code (Cmd+A), copy it. Save as <code>strategy_name.pine</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Rate Backtestability</h4>
+        <p>AI evaluates if the indicator produces clear trading signals. Skip only pure visualization tools. Be loose — don't miss opportunities.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Convert PineScript → Python</h4>
+        <p>AI translates indicator logic to Python using Pandas TA or TA Lib, builds backtest using the template.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-content">
+        <h4>Run Backtest & Log Results</h4>
+        <p>Execute with $1M cash on BTC data. Full stats → code comments. Key stats → master CSV. Push to GitHub.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-content">
+        <h4>10-15s Delay, Next Indicator</h4>
+        <p>Brief delay between each to simulate human interaction. Repeat for every accessible indicator.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GITHUB STRUCTURE -->
+  <div class="section-label">GitHub Repository Structure</div>
+  <div class="tree">
+    <span class="folder">📁 Moondev-AI-Agents/</span><br>
+    &nbsp;&nbsp;<span class="folder">📁 Agents/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 OpenClaw/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 TradingView/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 README.md</span> <span class="highlight">← mission rules, no-skip policy</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 master_results.csv</span> <span class="highlight">← ROI, MDD, Sharpe, Sortino, EV, # trades, .py filename</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 Pinescript/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 range_oscillator.pine</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 volatility_risk_premium.pine</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 ...</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="folder">📁 Backtesting/</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 range_oscillator.py</span> <span class="highlight">← full stats in """comments""" at top</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 volatility_risk_premium.py</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">📄 ...</span><br>
+  </div>
+
+  <!-- RULES -->
+  <div class="section-label">Iron Rules</div>
+  <div class="rules-grid">
+    <div class="rule must">
+      <div class="rule-type">✅ Must Do</div>
+      <p>Process <strong>every single indicator</strong> in Editor's Picks, Top, and Trending. No skipping. Multi-day grind.</p>
+    </div>
+    <div class="rule must">
+      <div class="rule-type">✅ Must Do</div>
+      <p>Use <strong>$1,000,000</strong> initial cash for BTC backtests. $100K can't even buy one BTC.</p>
+    </div>
+    <div class="rule must">
+      <div class="rule-type">✅ Must Do</div>
+      <p>Log <strong>full stats</strong> in code comments + key metrics in master CSV with Python filename.</p>
+    </div>
+    <div class="rule must">
+      <div class="rule-type">✅ Must Do</div>
+      <p><strong>Push to GitHub</strong> after every single completed backtest. Commit frequently.</p>
+    </div>
+    <div class="rule never">
+      <div class="rule-type">🚫 Never</div>
+      <p><strong>No optimization.</strong> Run original, unoptimized backtests only. Optimization takes forever.</p>
+    </div>
+    <div class="rule never">
+      <div class="rule-type">🚫 Never</div>
+      <p><strong>No fast-tracking.</strong> Don't skip to RSI and MACD. Don't take shortcuts. Lock in.</p>
+    </div>
+    <div class="rule tip">
+      <div class="rule-type">💡 Tip</div>
+      <p>Be <strong>loose</strong> with backtestable criteria. Skip only pure visualization tools. Don't miss opportunities.</p>
+    </div>
+    <div class="rule tip">
+      <div class="rule-type">💡 Tip</div>
+      <p>10-15 second delay between indicators. Act like a real user, not a scraper.</p>
+    </div>
+  </div>
+
+  <!-- WEBINAR THEMES -->
+  <div class="section-label">Webinar Talking Points</div>
+  <div class="themes">
+    <div class="theme">
+      <div class="theme-icon">⚖️</div>
+      <h4>"Code Is the Great Equalizer"</h4>
+      <p>Once you learn to code (or leverage AI for coding), you can build anything for the rest of your life. Spent 10 years being scared — don't make that mistake.</p>
+    </div>
+    <div class="theme">
+      <div class="theme-icon">🏆</div>
+      <h4>Chasing Jim Simons — $31B</h4>
+      <p>Systematic, data-driven trading. We have to take real swings. Renaissance Technologies proved the model — now AI democratizes it.</p>
+    </div>
+    <div class="theme">
+      <div class="theme-icon">♾️</div>
+      <h4>Unlimited Source of Ideas</h4>
+      <p>TradingView has hundreds, if not thousands, of community indicators with open source code. If you don't have ideas, you're cooked.</p>
+    </div>
+    <div class="theme">
+      <div class="theme-icon">🔁</div>
+      <h4>RBI: Research → Backtest → Implement</h4>
+      <p>A disciplined framework. If it works in the past, it's more likely to work in the future. Validate before you deploy.</p>
+    </div>
+    <div class="theme">
+      <div class="theme-icon">🐕</div>
+      <h4>The "Data Dog" Mentality</h4>
+      <p>Relentless, systematic evaluation. No shortcuts, no soft approaches. Hours and hours beating on your craft. Talent is natural — skill is built.</p>
+    </div>
+    <div class="theme">
+      <div class="theme-icon">🤖</div>
+      <h4>AI Automation at Scale</h4>
+      <p>OpenClaw automates the entire pipeline: browser navigation, code extraction, conversion, backtesting, logging, and Git pushes. Fully autonomous, multi-day project.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Tradyom × Ororus — Webinar Blueprint • Generated March 2, 2026</p>
+</div>
+
+</body>
+</html>
